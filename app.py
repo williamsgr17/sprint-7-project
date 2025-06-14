@@ -3,64 +3,51 @@ import plotly.express as px
 import streamlit as st
 
 car_data = pd.read_csv('vehicles_us.csv')  # leer los datos
+# agregar columna 'manufacturer'
+car_data['manufacturer'] = car_data['model'].str.split().str[0]
 
-st.header('Visor de datos de anuncios de coches en venta')  # encabezado
+st.header('💻 VISOR DE DATOS SOBRE ANUNCIOS DE VEHÍCULOS EN VENTA')  # encabezado
 
-# botón que construye un histograma
-# hist_button = st.button('Construir histograma')  # crear un botón
+st.subheader("Vista previa del dataset")
+st.dataframe(car_data.head(10))
 
-# if hist_button:  # al hacer clic en el botón
-#     # escribir un mensaje
-#     st.write(
-#         'Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
+st.subheader('📊 Tipos de vehículos por fabricante')
 
-#     # crear un histograma
-#     fig = px.histogram(car_data, x="odometer")
+# crear una casilla de verificación
+build_bar = st.checkbox(
+    # casilla de verificación
+    'Mostrar gráfico', key='gráfico de barras')
 
-#     # mostrar un gráfico Plotly interactivo
-#     st.plotly_chart(fig, use_container_width=True)
+if build_bar:  # al hacer clic en el botón
+    # crear un histograma
+    fig = px.bar(car_data, x="manufacturer", color='type')
 
-# # botón que construye un gráfico de dispersión
-# scatter_button = st.button('Construir gráfico de dispersión')  # crear un botón
+    # mostrar un gráfico Plotly interactivo
+    st.plotly_chart(fig, use_container_width=True)
 
-# if scatter_button:  # al hacer clic en el botón
-#     # escribir un mensaje
-#     st.write('Creación de un gráfico de dispersión para el conjunto de datos de anuncios de venta de coches')
-
-#     # crear un gráfico de fispersión
-#     fig_2 = px.scatter(car_data, x="odometer", y='price')
-
-#     # mostrar un gráfico Plotly interactivo
-#     st.plotly_chart(fig_2, use_container_width=True)
-
-
-# reemplazar los botones por casillas de verificación
+st.subheader('🚗 Histograma de `condición` vs `año del modelo`')
 
 # crear una casilla de verificación
 build_histogram = st.checkbox(
-    'Construir un histograma')  # casilla de verificación
+    'Mostrar histograma')  # casilla de verificación
 
 if build_histogram:  # al hacer clic en el botón
-    # escribir un mensaje
-    st.write(
-        'Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
-
     # crear un histograma
-    fig = px.histogram(car_data, x="odometer")
+    fig = px.histogram(car_data, x="model_year", color='condition')
 
     # mostrar un gráfico Plotly interactivo
     st.plotly_chart(fig, use_container_width=True)
 
 
-# casilla de verificación
-build_scatter = st.checkbox('Construir un gráfico de dispersión')
+st.subheader(
+    '💲Distribución de los kilometros del vehículo en relación con su precio')
+
+build_scatter = st.checkbox(
+    'Mostrar gráfico', key='gráfico de dispersión')  # casilla de verificación
 
 if build_scatter:  # al hacer clic en el botón
-    # escribir un mensaje
-    st.write('Creación de un gráfico de dispersión para el conjunto de datos de anuncios de venta de coches')
-
-    # crear un gráfico de fispersión
-    fig_2 = px.scatter(car_data, x="odometer", y='price')
+    # crear un histograma
+    fig = px.scatter(car_data, x="odometer", y="price")
 
     # mostrar un gráfico Plotly interactivo
-    st.plotly_chart(fig_2, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)
