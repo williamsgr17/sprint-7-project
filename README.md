@@ -10,5 +10,5 @@ Este proyecto tiene como objetivo utilizar los conocimientos adquiridos en este 
 
 Esta aplicacion proporciona una aplicación muy gráfica e interactiva, con casillas de verificación para que los usuarios decidan que gráficas desean visualizar.
 
-Link de la aplicación: 
+Link de la aplicación: https://sprint-7-project-f42a.onrender.com    
 
